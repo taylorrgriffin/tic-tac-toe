@@ -1,11 +1,138 @@
 
-fs = require('fs');
-http = require('http');
-express = require('express');
 
+// uses the enviroment file .env to configure build settings
+
+require('dotenv').config(); // no variable needed, just call the function
+
+
+
+
+
+
+//// key objects to use
+const bodyParser = require('body-parser'); // decodes bytstream in to js object
+const fs = require('fs');
+const express = require('express');
+////////////////////////////
+
+
+///// global objects / variables to ues
 var server = express();
-var port = process.env.port || 3000;
 
-server.listen(port, function(error) {
-	console.log("listening on port: " + port);
+const port = process.env.port || 3000;
+
+var gameData = require(process.cwd() + '/server/tttData.json').data || [];
+
+
+
+/////////////////////////////////////
+//middle ware functions
+//
+//these functions modify EVERY request a littlebit for 
+//easier interface, as well as provide access from more sources
+
+server.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   res.header("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+
+ //now go to the next function...  
+   next();
+ });
+
+server.use(bodyParser.json()); // soime stuff to convert int o json
+server.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+  server.use(function(req,res,next){
+    console.log('\n\n',"/////////////////////////");
+    console.log('=== Got request://A ===');
+    console.log(' --URL:', req.url , '====');
+    console.log(" --Method: ", req.method, '===');
+   console.log(" --body: ", req.body );
+
+    next();
 });
+//....
+
+//// non middle ware functions, 
+//
+//these functions catch all the endpoints , and urls.
+// database is gameData
+//
+// some functions like get all these files, or get this certain resource...
+
+
+
+// we serve all the static files by sending them as text to the broweser th
+// that interprets it as code, not saving it 
+staticOpts = {
+   extensions: ['php','htm','html','css','js'],
+   index: 'index.html',
+   setHeaders: function (res, path, stat) {
+          res.set('x-timestamp', Date.now());
+          if(path.split('.')[1] === 'css'){
+             res.set('Content-Type', 'text/css');
+          }
+	  else if(path.split('.')[1] === 'js'){
+	     res.set('Content-Type', 'text/javascript');
+	  }
+	  else{
+	     console.log(path);
+         res.set('Content-Type', 'text/html');
+	  }
+   }
+}
+server.get('/', express.static(process.cwd() + '/public', staticOpts) );
+
+
+//this funcction gets a store , a gameplay instance, 
+//and records it to the database
+server.get('/addReport', function(req,res,next){
+	
+
+   console.log("====\n\n adding a report now!");
+   var data = req.body;
+
+   // here we check to see ifthe object is what we want it to be.
+   if(data){
+      gameData.push(data);
+      dataBackUp();
+   }
+
+
+});
+
+
+
+
+
+///////////////////////////////////////
+server.listen(port, function(error) {
+ console.log('===\n -Server listening on', port, ' ==\n===');
+});
+
+// now that we are up and running, invoke the TUNNEL
+//
+require(process.cwd()  + '/server/expose.js');
+
+
+
+// ///////////////////////////////////////////////////////
+// -- Helper functions
+//
+
+//using writefile sync we can back up the data 
+function dataBackup(){
+   
+   var newDataBase = {
+      data: gameData
+   }
+   
+   fs.writeFileSync('./gameData.json', newDataBase);
+
+}
+
+
+

@@ -72,16 +72,27 @@ staticOpts = {
    index: 'index.html',
    setHeaders: function (res, path, stat) {
           res.set('x-timestamp', Date.now());
-          if(path.split('.')[1] === 'css'){
-             res.set('Content-Type', 'text/css');
-          }
-	  else if(path.split('.')[1] === 'js'){
-	     res.set('Content-Type', 'text/javascript');
+	  console.log("What do we need:", path.split('.')[1]); 
+	  console.log("=== \n get content ", res.get("Content-Type"));
+	  switch(path.split('.')[1]){
+		case "css":
+		   res.set('Content-Type', 'text/css');
+		   console.log("== css");
+		   break;
+		case "js":
+		   res.set('Content-Type', 'text/javascript');
+		   console.log("== js");
+		   break;
+		case "html":
+		   res.set('Content-Type', 'text/html');
+		   break;
+		default:
+		   res.set('Content-Type', 'text/plain');
+		   break;
+		   
 	  }
-	  else{
-	     console.log(path);
-         res.set('Content-Type', 'text/html');
-	  }
+	  
+
    }
 }
 server.get('/', express.static(process.cwd() + '/public', staticOpts) );

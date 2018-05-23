@@ -1,3 +1,14 @@
+
+//// =============================
+//// IMPORTING THE DATABASE SENDERS
+// this going to be the exports for sending stuff to the sever!!
+//var analTool = require("game-report-handler.js");
+//import { * } from 'game-report-handler.js';
+
+
+
+
+
 // Import option-select menus
 var options = [
   document.getElementsByClassName("tic-tac-toe-options1"),
@@ -311,10 +322,9 @@ function evaluateWin() {
   var winningPath = 0;
   // check all paths
   for (i = 0; i < 8; i++) {
-    // found winning x path
-    if (xPaths[i] == 1) {
-      // first win found
-      if (!won) {
+
+    if (xPaths[i] == 1) {   // found winning x path
+      if (!won) {// first win found
         won = 1;
         winningPath = i;
         winningTeam = "x";
@@ -354,10 +364,28 @@ function evaluateWin() {
   }
   // one player has a winning combination
   else {
-    setWinner(winningTeam);
-    setWinningCombination(pathDesc[winningPath]);
+    setWinner(winningTeam); // here we set the winning team!
+    setWinningCombination(pathDesc[winningPath]); ///// HERE WE SET THE TRUE WINNING PATH
+
+    // now that we have evaulated the win, we can export this data to
+    // be able to store it permanently.
+    var report = {
+      winner: winningTeam,
+      path: pathDesc[winningPath]
+    };
+//     analTool.reportSend(report); // send the report to the server/
+   outgoingReport(report);
   }
 }
+
+
+
+
+
+
+
+
+
 
 function evaluatePotentialWinPaths() {
   for (i = 0; i < 8; i++) {

@@ -140,7 +140,6 @@ function dataBackUp(){
       data: gameData
    }
 
-   fs.writeFileSync('./gameData.json', newDataBase);
-
+   fs.writeFileSync('./server/tttData.json', JSON.stringify(newDataBase) ); 
 
 }

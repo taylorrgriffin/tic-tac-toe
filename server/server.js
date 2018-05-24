@@ -6,9 +6,8 @@ require('dotenv').config(); // no variable needed, just call the function
 
 
 
-
-
-
+//=======================================
+///////////////////////////
 //// key objects to use
 const bodyParser = require('body-parser'); // decodes bytstream in to js object
 const fs = require('fs');
@@ -16,6 +15,7 @@ const express = require('express');
 ////////////////////////////
 
 
+//=========================================
 ///// global objects / variables to ues
 var server = express();
 
@@ -24,7 +24,7 @@ const port = process.env.port || 3000;
 var gameData = require(process.cwd() + '/server/tttData.json').data || [];
 
 
-
+//=====================================
 /////////////////////////////////////
 //middle ware functions
 //
@@ -54,16 +54,6 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
     next();
 });
-//....
-
-//// non middle ware functions,
-//
-//these functions catch all the endpoints , and urls.
-// database is gameData
-//
-// some functions like get all these files, or get this certain resource...
-
-
 
 // we serve all the static files by sending them as text to the broweser th
 // that interprets it as code, not saving it
@@ -91,6 +81,17 @@ staticOpts = {
 
    }
 }
+//....
+//====================================
+//// non middle ware functions,
+//
+//these functions catch all the endpoints , and urls.
+// database is gameData
+//
+// some functions like get all these files, or get this certain resource...
+
+
+
 server.use('/', express.static(process.cwd() + '/public', staticOpts) );
 
 
@@ -127,7 +128,7 @@ server.listen(port, function(error) {
 require(process.cwd()  + '/server/expose.js');
 
 
-
+//========================================
 // ///////////////////////////////////////////////////////
 // -- Helper functions
 //

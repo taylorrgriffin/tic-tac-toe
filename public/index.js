@@ -325,35 +325,91 @@ function checkPotentialPath(token1,token2,index1,index2,index3) {
     return(0);
   }
 }
-var PotPaths = [null]*9;
-console.log(PotPaths);
 
-/* checks to see if there were blank paths to be winnable still.
+
+var potentialWins = [ [0,0]*9 ] ;
+console.log(potentialWins);
+
+
+
+/*Potential paths that Could have been, but didnt happeen.
+* * *
+- o o  horizotal o potential path. .....
+- - -
+checks to see if there were blank paths to be winnable still.
 goes thorugh all the verrtical, horizontal outcomes*/
 function checkForPossiblePaths(){
-
+  var winIter= 0
 // check for a vertical possibility
-  for (let i=0; i < 3; i ++){
-
-
-  }
-
+  for (winIter; winIter < 3; winIter ++){
+    potentialWins[winIter][0] = checkPath(winIter, 0, 0);
+    potentialWins[winIter][1] = checkPath(winIter, 0, 1);
 }
-checkPath(num, roworcol){
-  var count = 0;
-// checking vertical
-  if(roworcol == 1 ){
-    count += (elements[0 + num] == 'x');
-    count += (elements[3 + num] == 'x');
-    count += (elements [6 + num] == 'x')
-    console.log("===========\n  this coloum is equal to ", count);
+
+  // check for a horizontal possibility
+  for (winIter; winIter < 3; winIter ++){
+    potentialWins[winIter][0] = checkPath(winIter-3, 1, 0);
+    potentialWins[winIter][1] = checkPath(winIter-3, 1, 1);
+  }
+
+  // then i will ahve to diagnozals. not  ,, no i wont do thats
+  console.log('====\n\n Here arer the results of potentials!!!: \n');
+  console.log(potentialWins);
+}
+
+/*
+*desc: literally only checks 1 row or colomn.
+*inputs:
+num: (int) the value of the index of the col or rows
+row_col: (boolean) the indicator of row to col
+who: is it the x or the o?
+*/
+checkPath(origin, row_col, who){
+  // on the start we decide what letter we DONT want.
+    var letter = row_col ? 'x' : 'o';
+    var letter_ = (!row_col) ? 'x' : 'o';
+    var count = 0;
+
+  //=== checking vertical possibilitses
+    if(row_col == 1 ){
+        for(let x = 0; x < 2; x++){
+          //here We count the number of containing x's
+          count += (elements[ (3*x)  + origin] == letter );
+          if(elements[ (3*x)  + origin] == letter_ ){ // Stop right there!
+            count = 0;
+          }
+          return "blocked"; // this path was impossible to win!
+        }
+        console.log("===========\n  this coloum is equal to ", count);
+        // now that we have counted, we need two
+        if(count == 2){
+          // only triggered by 2, not one or 3
+          return "potential";
+        }
+        else{
+          return "fail";
+        }
+      }
+  //===== checking horizontal possibilites
+    else{
+      for(let x = 0; x < 2; x++){
+        //here We count the number of containing x's
+        count += (elements[ (3*origin)  + x] == letter );
+        if(elements[ (3*origin)  + x] == letter_ ){ // Stop right there!
+          count = 0;
+        }
+        return "blocked"; // this path was impossible to win!
+      }
+      console.log("===========\n  this coloum is equal to ", count);
+      // now that we have counted, we need two
+      if(count == 2){
+        // only triggered by 2, not one or 3
+        return "potential";
+      }
+      else{
+        return "fail";
+      }
     }
-
-  }
-// checking horizontal
-  else{
-
-  }
 
 }
 

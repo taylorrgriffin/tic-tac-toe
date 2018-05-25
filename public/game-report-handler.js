@@ -12,21 +12,29 @@
     default:
       break;
    }
+
 }
 
-
-//based on this data object, there are paramters
-// to be sent to the database.
+//name: outgoing report
+//desc: based on this data object, there are paramters
+//      to be sent to the database. so it makes a request with the stuff.
+//post-cond: before [ x ] after [ x , x ]
+//  ~ a new post is added to the database
  function outgoingReport(data){
-   let text = JSON.stringify(data);
    let url = "http://tictactoe.localtunnel.me/addReport";
+   // create a post request, and put the content in the body
    var req = new XMLHttpRequest();
+   req.open("POST", url);
 
-  req.open("POST", url);
-  req.setRequestHeader("Content-Type","application/json");
-
-
-  req.send(text);
+   if(0){
+     let text = JSON.stringify(data);
+     req.setRequestHeader("Content-Type","application/json");
+     req.send(text);
+   }
+   else{
+     req.close();
+     console.log("there was an error validating the object");
+   }
 
 
 }

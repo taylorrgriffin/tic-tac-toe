@@ -378,84 +378,39 @@ function check_HorV_Path(origin, who , which){
   // init
     var count = 0;
     // calculator to be determined at runtime
+    var desc = which ? "vertical" : "horizontal";
     var indexCalc = which ? function(step,origin){
       return ( (3*step)  + origin  ); // how to stride vertically
     } : function(step,origin){
       return ( (3*origin)  + step ); // how to stride horizontally
     };
 
+    console.log(elements[  indexCalc(0,origin) ], ' ',elements[  indexCalc(1,origin) ], ' ',elements[  indexCalc(2,origin) ]);
+
+    var letter = (who) ? 'x' : 'o';
     var letter_ = (!who) ? 'x' : 'o';
 
    //=== checking horizontal or vertical possibilitses
         for(let x = 0; x < 2; x++){
           //here We count the number of containing x's
-          count += (elements[  indexCalc(x,origin) ] == letter );
-          if(elements[ indexCalc(x,origin) ] == letter_ ){ // Stop right there!
+          count += (elements[  indexCalc(x,origin) ] == letter ); // increment
+          if(elements[ indexCalc(x,origin) ] == letter_ && count == 2){ // Stop right there!
             count = 0;
-            return "blocked"; // this path was impossible to win!
+            return desc + " blocked "; // this path was impossible to win!
+          }
+          else if(elements[ indexCalc(x,origin) ] == letter_){
+            return desc + " nothing ";
           }
         }
-        console.log("===========\n  this row is equal to ", count);
         // now that we have counted, we need two
+
         if(count == 2){
           // only triggered by 2, not one or 3
-          return "potential";
+          return desc + " potential ";
         }
         else{
-          return "fail";
+          return desc + " fail ";
         }
-}
-
-function checkHorzPath(origin, who ){
-  // init
-    var count = 0;
-    var letter = who ? 'x' : 'o';
-    var letter_ = (!who) ? 'x' : 'o';
-   //=== checking horizontal possibilitses
-        for(let x = 0; x < 2; x++){
-          //here We count the number of containing x's
-          count += (elements[ (3*x)  + origin] == letter );
-          if(elements[ (3*x)  + origin] == letter_ ){ // Stop right there!
-            count = 0;
-            return "blocked"; // this path was impossible to win!
-          }
-        }
-        console.log("===========\n  this row is equal to ", count);
-        // now that we have counted, we need two
-        if(count == 2){
-          // only triggered by 2, not one or 3
-          return "potential";
-        }
-        else{
-          return "fail";
-        }
-}
-
-function checkVertPath(origin, who){
-
-  // init
-  var count = 0;
-  var letter = who ? 'x' : 'o';
-  var letter_ = (!who) ? 'x' : 'o';
-//===== checking verticale possibilites
-  for(let x = 0; x < 2; x++){
-    //here We count the number of containing x's with booleans haha
-    count += (elements[ (3*origin)  + x] == letter );
-    if(elements[ (3*x)  + origin] == letter_ ){ // Stop right there!
-      count = 0;
-      return "blocked"; // this path was impossible to win!
-    }// this path was impossible to win!
-  }
-  console.log("===========\n  this coloum is equal to ", count);
-  // now that we have counted, we need two
-  if(count == 2){
-    // only triggered by 2, not one or 3
-    return "potential";
-  }
-  else{
-    return "fail";
-  }
-
 }
 
 

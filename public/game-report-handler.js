@@ -9,16 +9,8 @@ function tacReport(data){
 
   this.winner = data.winningTeam;
   this.winPath =  data.winPathDesc;
-  this.closePaths = [];
-  //deepcopy
-  if(data.closeDescs){
-    data.closeDescs.forEach(function(elem){
-      this.closePaths.push(elem);
-    });
-  }
-  else{
-    this.closePaths = [];
-  }
+  this.closePaths = JSON.parse(JSON.stringify(data.closeDescs));
+
 
   return this;
 }

@@ -255,8 +255,13 @@ function checkForWin() {
   oPaths[6] = checkPath("o",0,4,8);
   xPaths[7] = checkPath("x",2,4,6);
   oPaths[7] = checkPath("o",2,4,6);
+
+
   // See if a proper win has occured
   evaluateWin();
+
+
+
 }
 
 function checkWinnable() {
@@ -291,6 +296,8 @@ function checkPotentialWinPaths() {
   xPotentialPaths[7] = checkPotentialPath("x","-",2,4,6);
   oPotentialPaths[7] = checkPotentialPath("o","-",2,4,6);
   ubPotentialPaths[7] = checkPath("-",2,4,6);
+
+  console.log("what about the potential paths?");
   for ( i = 0; i < 8; i++) {
     console.log(xPotentialPaths[i]);
   }
@@ -306,14 +313,52 @@ function checkPath(token,index1,index2,index3) {
   }
 }
 
+
+
 function checkPotentialPath(token1,token2,index1,index2,index3) {
-  if (((elements[index1] == token1) || (elements[index1] == token2)) && ((elements[index2] == token1) || (elements[index2] == token2)) && ((elements[index3] == token1) || (elements[index3] == token2))) {
+  if (((elements[index1] == token1) || (elements[index1] == token2)) &&
+  ((elements[index2] == token1) || (elements[index2] == token2)) &&
+  ((elements[index3] == token1) || (elements[index3] == token2))) {
     return(1);
   }
   else {
     return(0);
   }
 }
+var PotPaths = [null]*9;
+console.log(PotPaths);
+
+/* checks to see if there were blank paths to be winnable still.
+goes thorugh all the verrtical, horizontal outcomes*/
+function checkForPossiblePaths(){
+
+// check for a vertical possibility
+  for (let i=0; i < 3; i ++){
+
+
+  }
+
+}
+checkPath(num, roworcol){
+  var count = 0;
+// checking vertical
+  if(roworcol == 1 ){
+    count += (elements[0 + num] == 'x');
+    count += (elements[3 + num] == 'x');
+    count += (elements [6 + num] == 'x')
+    console.log("===========\n  this coloum is equal to ", count);
+    }
+
+  }
+// checking horizontal
+  else{
+
+  }
+
+}
+
+
+
 
 function evaluateWin() {
   // initliaze checking vars

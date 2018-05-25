@@ -109,7 +109,7 @@ server.post('/addReport', function(req,res,next){
       dataBackUp();
    }
 
-   res.status(200).send();
+   res.status(202).send();
 
 
 });
@@ -140,6 +140,6 @@ function dataBackUp(){
       data: gameData
    }
 
-   fs.writeFileSync('./server/tttData.json', JSON.stringify(newDataBase) ); 
+   fs.writeFileSync('./server/tttData.json', JSON.stringify(newDataBase) );
 
 }

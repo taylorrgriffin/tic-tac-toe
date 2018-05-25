@@ -1,3 +1,32 @@
+
+/*=====  Key objects ===
+
+*/
+// edit the report object here:
+//name Report
+//desc: has necesarry int and booleans to descript outcomes
+function tacReport(data){
+
+  this.winner = data.winningTeam;
+  this.winPath =  data.winPathDesc;
+  this.closePaths = [];
+  //deepcopy
+  if(data.closeDescs){
+    data.closeDescs.forEach(function(elem){
+      this.closePaths.push(elem);
+    });
+  }
+  else{
+    this.closePaths = [];
+  }
+
+  return this;
+}
+
+
+
+
+
 // based on the integer passed into the functino,
 // it will make that type of request tothe database
  function Ask4Report( format ){
@@ -25,8 +54,8 @@
    // create a post request, and put the content in the body
    var req = new XMLHttpRequest();
    req.open("POST", url);
-
-   if(0){
+//validate
+   if(data instanceof tacReport){
      let text = JSON.stringify(data);
      req.setRequestHeader("Content-Type","application/json");
      req.send(text);

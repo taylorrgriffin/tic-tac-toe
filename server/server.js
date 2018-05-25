@@ -124,7 +124,8 @@ server.listen(port, function(error) {
 });
 
 // now that we are up and running, invoke the TUNNEL
-//
+// this connects it to
+// http://tictactoe.localtunnel.me/
 require(process.cwd()  + '/server/expose.js');
 
 

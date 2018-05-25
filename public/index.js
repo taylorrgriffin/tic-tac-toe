@@ -185,14 +185,18 @@ function runReport() {
   // set status attribute
   setStatus();
   // if valid game, run rest of report
-  if (valid) {
-    checkForWin();
-    // if neither play won, run rest of report
-    if (!won) {
-      checkPotentialWinPaths();
-      checkWinnable();
-    }
+  ////////////////
+// could be encapsulated in to a report class
+      if (valid) {
+        checkForWin();
+        // if neither play won, run rest of report
+        if (!won) {
+          checkPotentialWinPaths();
+          checkWinnable();
+        }
+///////////////////////////////////////////////
     // if a player won, don't finish rest of report
+
     else {
       setWinnableByX("n/a");
       setWinnableByO("n/a");
@@ -327,10 +331,12 @@ function checkPotentialPath(token1,token2,index1,index2,index3) {
 }
 
 
-var potentialWins = [ [0,0]*9 ] ;
-console.log(potentialWins);
 
-
+//[            ,            ]
+    // blocked,   fail
+    // fail,      fail
+    // potential, fial
+    // potential, fail
 
 /*Potential paths that Could have been, but didnt happeen.
 * * *
@@ -339,48 +345,57 @@ console.log(potentialWins);
 checks to see if there were blank paths to be winnable still.
 goes thorugh all the verrtical, horizontal outcomes*/
 function checkForPossiblePaths(){
-  var winIter= 0
-// check for a vertical possibility
-  for (winIter; winIter < 3; winIter ++){
-    potentialWins[winIter][0] = checkPath(winIter, 0, 0);
-    potentialWins[winIter][1] = checkPath(winIter, 0, 1);
+  var potentialWins = [];
+  var winIter = 0;
+// check for a Horiztonal possibilities then
+//after 3 they theck for veritcal possibilities
+  for (winIter; winIter < 6; winIter ++){
+    // 1 == x , 0 == o, using the boolean so we can always determine the other letter
+    if(winIter<3){       //         'x'                                 'o'
+      potentialWins.push([ check_HorV_Path(winIter%3, 1 , 0), check_HorV_Path(winIter%3, 0 , 0) ] )
+    }
+    else{
+      potentialWins.push([ check_HorV_Path(winIter%3, 1 , 1), check_HorV_Path(winIter%3, 0 , 1)] )
+    }
 }
 
-  // check for a horizontal possibility
-  for (winIter; winIter < 6; winIter ++){
-    potentialWins[winIter][0] = checkPath(winIter-3, 1, 0);
-    potentialWins[winIter][1] = checkPath(winIter-3, 1, 1);
-  }
 
   // then i will ahve to diagnozals. not  ,, no i wont do thats
   console.log('====\n\n Here arer the results of potentials!!!: \n');
   console.log(potentialWins);
+  return potentialWins;
 }
 
-/*
+/* chechhorz and checkvert
 *desc: literally only checks 1 row or colomn.
 *inputs:
 num: (int) the value of the index of the col or rows
-row_col: (boolean) the indicator of row to col
+which: (boolean) the indicator of vertical or horizontal stride
+this determiens aruntime function that will calculate the index
 who: is it the x or the o?
 */
-checkPath(origin, row_col, who){
-  // on the start we decide what letter we DONT want.
-    var letter = row_col ? 'x' : 'o';
-    var letter_ = (!row_col) ? 'x' : 'o';
+function check_HorV_Path(origin, who , which){
+  // init
     var count = 0;
+    // calculator to be determined at runtime
+    var indexCalc = which ? function(step,origin){
+      return ( (3*step)  + origin  ); // how to stride vertically
+    } : function(step,origin){
+      return ( (3*origin)  + step ); // how to stride horizontally
+    };
 
-  //=== checking vertical possibilitses
-    if(row_col == 1 ){
+    var letter_ = (!who) ? 'x' : 'o';
+
+   //=== checking horizontal or vertical possibilitses
         for(let x = 0; x < 2; x++){
           //here We count the number of containing x's
-          count += (elements[ (3*x)  + origin] == letter );
-          if(elements[ (3*x)  + origin] == letter_ ){ // Stop right there!
+          count += (elements[  indexCalc(x,origin) ] == letter );
+          if(elements[ indexCalc(x,origin) ] == letter_ ){ // Stop right there!
             count = 0;
+            return "blocked"; // this path was impossible to win!
           }
-          return "blocked"; // this path was impossible to win!
         }
-        console.log("===========\n  this coloum is equal to ", count);
+        console.log("===========\n  this row is equal to ", count);
         // now that we have counted, we need two
         if(count == 2){
           // only triggered by 2, not one or 3
@@ -389,27 +404,57 @@ checkPath(origin, row_col, who){
         else{
           return "fail";
         }
-      }
-  //===== checking horizontal possibilites
-    else{
-      for(let x = 0; x < 2; x++){
-        //here We count the number of containing x's
-        count += (elements[ (3*origin)  + x] == letter );
-        if(elements[ (3*origin)  + x] == letter_ ){ // Stop right there!
-          count = 0;
+}
+
+function checkHorzPath(origin, who ){
+  // init
+    var count = 0;
+    var letter = who ? 'x' : 'o';
+    var letter_ = (!who) ? 'x' : 'o';
+   //=== checking horizontal possibilitses
+        for(let x = 0; x < 2; x++){
+          //here We count the number of containing x's
+          count += (elements[ (3*x)  + origin] == letter );
+          if(elements[ (3*x)  + origin] == letter_ ){ // Stop right there!
+            count = 0;
+            return "blocked"; // this path was impossible to win!
+          }
         }
-        return "blocked"; // this path was impossible to win!
-      }
-      console.log("===========\n  this coloum is equal to ", count);
-      // now that we have counted, we need two
-      if(count == 2){
-        // only triggered by 2, not one or 3
-        return "potential";
-      }
-      else{
-        return "fail";
-      }
-    }
+        console.log("===========\n  this row is equal to ", count);
+        // now that we have counted, we need two
+        if(count == 2){
+          // only triggered by 2, not one or 3
+          return "potential";
+        }
+        else{
+          return "fail";
+        }
+}
+
+function checkVertPath(origin, who){
+
+  // init
+  var count = 0;
+  var letter = who ? 'x' : 'o';
+  var letter_ = (!who) ? 'x' : 'o';
+//===== checking verticale possibilites
+  for(let x = 0; x < 2; x++){
+    //here We count the number of containing x's with booleans haha
+    count += (elements[ (3*origin)  + x] == letter );
+    if(elements[ (3*x)  + origin] == letter_ ){ // Stop right there!
+      count = 0;
+      return "blocked"; // this path was impossible to win!
+    }// this path was impossible to win!
+  }
+  console.log("===========\n  this coloum is equal to ", count);
+  // now that we have counted, we need two
+  if(count == 2){
+    // only triggered by 2, not one or 3
+    return "potential";
+  }
+  else{
+    return "fail";
+  }
 
 }
 
@@ -470,10 +515,12 @@ function evaluateWin() {
 
     // now that we have evaulated the win, we can export this data to
     // be able to store it permanently.
-    var report = {
+    let reportData = {
       winner: winningTeam,
-      path: pathDesc[winningPath]
+      path: pathDesc[winningPath],
+      closeDescs: checkForPossiblePaths()
     };
+    var report = new tacReport(reportData);
 //     analTool.reportSend(report); // send the report to the server/
    outgoingReport(report);
   }

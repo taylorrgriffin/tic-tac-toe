@@ -347,7 +347,7 @@ function checkForPossiblePaths(){
 }
 
   // check for a horizontal possibility
-  for (winIter; winIter < 3; winIter ++){
+  for (winIter; winIter < 6; winIter ++){
     potentialWins[winIter][0] = checkPath(winIter-3, 1, 0);
     potentialWins[winIter][1] = checkPath(winIter-3, 1, 1);
   }

@@ -350,19 +350,31 @@ function checkForPossiblePaths(){
 // check for a Horiztonal possibilities then
 //after 3 they theck for veritcal possibilities
   for (winIter; winIter < 6; winIter ++){
-    // 1 == x , 0 == o, using the boolean so we can always determine the other letter
-    if(winIter<3){       //         'x'                                 'o'
-      potentialWins.push([ check_HorV_Path(winIter%3, 1 , 0), check_HorV_Path(winIter%3, 0 , 0) ] )
-    }
-    else{
-      potentialWins.push([ check_HorV_Path(winIter%3, 1 , 1), check_HorV_Path(winIter%3, 0 , 1)] )
-    }
-}
+      // 1 == x , 0 == o, using the boolean so we can always determine the other letter
+      if(winIter<3){       //         'x'                                 'o'
+        potentialWins.push([ check_HorV_Path(winIter%3, 1 , 0), check_HorV_Path(winIter%3, 0 , 0) ] )
+      }
+      else{
+        potentialWins.push([ check_HorV_Path(winIter%3, 1 , 1), check_HorV_Path(winIter%3, 0 , 1)] )
+      }
+  }
 
 
   // then i will ahve to diagnozals. not  ,, no i wont do thats
   console.log('====\n\n Here arer the results of potentials!!!: \n');
   console.log(potentialWins);
+
+  blocked = [];
+  // tim to evaluate the potentia winPathDesc
+  for (let i =0; i< potentialWins.length; i++){
+    if(potentialWins[i][0].contains('blocked') ){
+      blocked.push([i,0]);
+    }
+    else if(potentialWins[i][1].contains('blocked') ){
+      blocked.push([i,1]);
+  }
+  console.log('blocked pagths: ', blocked);
+
   return potentialWins;
 }
 

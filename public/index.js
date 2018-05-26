@@ -351,31 +351,45 @@ function checkForPossiblePaths(){
 //after 3 they theck for veritcal possibilities
   for (winIter; winIter < 6; winIter ++){
       // 1 == x , 0 == o, using the boolean so we can always determine the other letter
-      if(winIter<3){       //         'x'                                 'o'
+      if(winIter<3){       // [         'x'                                 'o'                ]
         potentialWins.push([ check_HorV_Path(winIter%3, 1 , 0), check_HorV_Path(winIter%3, 0 , 0) ] )
-      }
+      }                                   ///   check_HorV_Path(origin, x or o , horz or vert)
       else{
         potentialWins.push([ check_HorV_Path(winIter%3, 1 , 1), check_HorV_Path(winIter%3, 0 , 1)] )
       }
   }
 
-
   // then i will ahve to diagnozals. not  ,, no i wont do thats
   console.log('====\n\n Here arer the results of potentials!!!: \n');
   console.log(potentialWins);
 
-  blocked = [];
-  // tim to evaluate the potentia winPathDesc
-  for (let i =0; i< potentialWins.length; i++){
-    if(potentialWins[i][0].contains('blocked') ){
-      blocked.push([i,0]);
-    }
-    else if(potentialWins[i][1].contains('blocked') ){
-      blocked.push([i,1]);
-  }
+  var blocked = checkString(potentialWins, "blocked");
   console.log('blocked pagths: ', blocked);
 
+  var potential = checkString(potentialWins, "potential");
+  console.log("potential paths: ", potential)
+
   return potentialWins;
+}
+
+function checkString( listPaths, query ){
+
+  var entries = [];
+    for (let curr=0; curr<listPaths.length;curr++){
+
+      // only one or the other can contain so its if, and else it
+      if(listPaths[curr][0].contains(query)){
+        switch(curr%3){
+          case
+        }
+        entries.push([curr,listPaths[curr][0]]);
+      }
+      else if(listPaths[curr][1].contains(query)){
+        entries.push([curr,listPaths[curr][1]]);
+      }
+
+    }
+    return entries;
 }
 
 /* chechhorz and checkvert

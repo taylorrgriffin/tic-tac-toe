@@ -377,7 +377,9 @@ who: is it the x or the o?
 function check_HorV_Path(origin, who , which){
   // init
     var count = 0;
-    // calculator to be determined at runtime
+    var letter = (who) ? 'x' : 'o'; // what letter are we looking for
+    var letter_ = (!who) ? 'x' : 'o';
+
     var desc = which ? "vertical" : "horizontal";
     var indexCalc = which ? function(step,origin){
       return ( (3*step)  + origin  ); // how to stride vertically
@@ -385,31 +387,22 @@ function check_HorV_Path(origin, who , which){
       return ( (3*origin)  + step ); // how to stride horizontally
     };
 
-    console.log(elements[  indexCalc(0,origin) ], ' ',elements[  indexCalc(1,origin) ], ' ',elements[  indexCalc(2,origin) ]);
-
-    var letter = (who) ? 'x' : 'o';
-    var letter_ = (!who) ? 'x' : 'o';
-
+    var blocked_flag = false;
    //=== checking horizontal or vertical possibilitses
-        for(let x = 0; x < 2; x++){
-          //here We count the number of containing x's
-          count += (elements[  indexCalc(x,origin) ] == letter ); // increment
-          if(elements[ indexCalc(x,origin) ] == letter_ && count == 2){ // Stop right there!
-            count = 0;
-            return desc + " blocked "; // this path was impossible to win!
-          }
-          else if(elements[ indexCalc(x,origin) ] == letter_){
-            return desc + " nothing ";
-          }
+        for(let x = 0; x < 3; x++){
+          if(elements[  indexCalc(x,origin) ] == letter ) count +=  1; // increment
+          else if(elements[ indexCalc(x,origin) ] == letter_ )  blocked_flag = true; // Stop right there!
         }
         // now that we have counted, we need two
-
-        if(count == 2){
+        if(count === 2 && blocked_flag ){
+          return desc + " blocked ";
+        }
+        else if(count === 2){
           // only triggered by 2, not one or 3
           return desc + " potential ";
         }
         else{
-          return desc + " fail ";
+          return desc + " nothing ";
         }
 }
 
@@ -477,7 +470,7 @@ function evaluateWin() {
     };
     var report = new tacReport(reportData);
 //     analTool.reportSend(report); // send the report to the server/
-   outgoingReport(report);
+   //outgoingReport(report);
   }
 }
 

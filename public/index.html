@@ -2,14 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Tic-Tac-Toe</title>
+    <title>TicTacTow</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
   </head>
   <header>
     <div class="header-box">
-      Taylor Griffin's Sample Projects
+      Taylor Griffan sample projcets
     </div>
+    <iframe  class="special-stuff" src="urldata.txt"></iframe>
   </header>
   <body class="body-content">
     <div>
@@ -215,6 +216,12 @@
       <div id="winner">
         Winning combination: N/A
       </div>
+      <ul id="possiblePaths">
+        <h5> Possible Paths: </h5>
+        </ul>
+      <ul id="blockedPaths">
+        <h5> Blocked Paths: </h5>
+        </ul>
       <div id="xWinnable">
         winnable by x:
       </div>
@@ -234,8 +241,20 @@
   </body>
 
   <!-- all the necessary game scripts -->
-  <script src="index.js" charset="utf-8"></script>
+  <script>
+    var URL = "";// this is a dynamic url that we will connect to.
+    window.addEventListener('load',function(){
+      var stuff = document.querySelector('.special-stuff');
+     URL = stuff.contentDocument.querySelector('pre').textContent;
+
+    })
+    </script>
+
+    <script src="some-reportTools.js" charset="utf-8"></script>
+<!-- ^^^ index js uses these report tools to generate a parts of thereport ^^^^^ -->
+    <script src="index.js" charset="utf-8"></script>
     <script src="report-file-handler.js" charset="utf-8"></script>
+    <!-- ^^ these tools are for communicating with the server ^^^ -->
 </html>
      
                   

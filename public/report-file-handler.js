@@ -7,9 +7,10 @@
 //desc: has necesarry int and booleans to descript outcomes
 function tacReport(data){
 
-  this.winner = data.winningTeam;
-  this.winPath =  data.winPathDesc;
-  this.closePaths = JSON.parse(JSON.stringify(data.closeDescs));
+  this.winner = data.winner || '-';
+  this.winPath =  data.path || "Haha, really good.";
+  this.potentials = JSON.parse(JSON.stringify(data.potential)) || [];
+  this.blocked = JSON.parse(JSON.stringify(data.blocked)) || [];
 
 
   return this;
@@ -41,11 +42,14 @@ function tacReport(data){
 //      to be sent to the database. so it makes a request with the stuff.
 //post-cond: before [ x ] after [ x , x ]
 //  ~ a new post is added to the database
+
  function outgoingReport(data){
-   let url = "http://tictactoe.localtunnel.me/addReport";
+   // let url = "http://tictactoe.localtunnel.me/addReport";
+   let url = "http://localhost:2247/addReport";
+   console.log("the current url = ", URL );
    // create a post request, and put the content in the body
    var req = new XMLHttpRequest();
-   req.open("POST", url);
+   req.open("POST", URL + '/addReport');
 //validate
    if(data instanceof tacReport){
      let text = JSON.stringify(data);

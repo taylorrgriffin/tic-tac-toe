@@ -1,1 +1,23 @@
-{"data":[{"winner":"x","path":"bottom row"},{"winner":0,"path":"top row"},{"winner":0,"path":"top row"},{"winner":0,"path":"top row"},{"winner":"x","path":"left diagonal"},{"closePaths":[]},{"closePaths":[["horizontal nothing ","horizontal fail "],["horizontal nothing ","horizontal potential "],["horizontal potential ","horizontal nothing "],["vertical nothing ","vertical potential "],["vertical nothing ","vertical fail "],["vertical fail ","vertical fail "]]},{"closePaths":[["horizontal nothing ","horizontal nothing "],["horizontal nothing ","horizontal nothing "],["horizontal nothing ","horizontal potential "],["vertical potential ","vertical nothing "],["vertical nothing ","vertical potential "],["vertical fail ","vertical nothing "]]},{"closePaths":[["horizontal nothing ","horizontal nothing "],["horizontal nothing ","horizontal nothing "],["horizontal nothing ","horizontal potential "],["vertical potential ","vertical nothing "],["vertical nothing ","vertical potential "],["vertical fail ","vertical nothing "]]},{"closePaths":[["horizontal potential ","horizontal nothing "],["horizontal nothing ","horizontal nothing "],["horizontal nothing ","horizontal nothing "],["vertical nothing ","vertical nothing "],["vertical potential ","vertical nothing "],["vertical fail ","vertical fail "]]}]}
+{
+  "data": [{
+    "winner": "x",
+    "winPath": "left-most column",
+    "potentials": ["middle vertical potential by o"],
+    "blocked": []
+  }, {
+    "winner": "x",
+    "winPath": "left diagonal",
+    "potentials": [],
+    "blocked": ["bottom horizontal blocked by x", "middle vertical blocked by x"]
+  }, {
+    "winner": "x",
+    "winPath": "top row",
+    "potentials": ["middle horizontal potential by o"],
+    "blocked": ["bottom horizontal blocked by x", "left vertical blocked by o", "middle vertical blocked by x"]
+  }, {
+    "winner": "x",
+    "winPath": "middle row",
+    "potentials": ["top horizontal potential by o"],
+    "blocked": ["middle vertical blocked by o", "right vertical blocked by x"]
+  }]
+}

@@ -4,6 +4,11 @@
 
 require('dotenv').config(); // no variable needed, just call the function
 
+// if we want to use local tunnel, toggle high.
+//else if you toggle low, it wont require the file later
+const expose = 1;
+
+
 
 
 //=======================================
@@ -13,6 +18,10 @@ const bodyParser = require('body-parser'); // decodes bytstream in to js object
 const fs = require('fs');
 const express = require('express');
 ////////////////////////////
+
+
+// set our parameters for the client!! very robust.
+fs.writeFile(process.cwd()  + '/public/urldata.txt',"",function(err){return;});
 
 
 //=========================================
@@ -50,7 +59,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
     console.log('=== Got request:// ===');
     console.log(' --URL:', req.url , '====');
     console.log(" --Method: ", req.method, '===');
-   console.log(" --body: ", req.body );
+   console.log(" --body: ", req.body.winner );
 
     next();
 });
@@ -100,9 +109,10 @@ server.use('/', express.static(process.cwd() + '/public', staticOpts) );
 server.post('/addReport', function(req,res,next){
 
 
-   console.log("====\n\n adding a report now!", req.body);
-   var data = req.body;
+   console.log("====\n\n adding a report now!" +
+                '\n\t== Who won? ',  req.body.winner);
 
+   var data = req.body;
    // here we check to see ifthe object is what we want it to be.
    if(data){
       gameData.push(data);
@@ -121,12 +131,17 @@ server.post('/addReport', function(req,res,next){
 ///////////////////////////////////////
 server.listen(port, function(error) {
  console.log('===\n -Server listening on', port, ' ==\n===');
+
+ fs.writeFile(process.cwd() + 'public/urldata.txt', 'http://localhost:' + port + '\n',function(err){ return;})
+
 });
 
 // now that we are up and running, invoke the TUNNEL
 // this connects it to
 // http://tictactoe.localtunnel.me/
-require(process.cwd()  + '/server/expose.js');
+if(expose){
+  require(process.cwd()  + '/server/expose.js');
+}
 
 
 //========================================
@@ -141,6 +156,6 @@ function dataBackUp(){
       data: gameData
    }
 
-   fs.writeFileSync('./server/tttData.json', JSON.stringify(newDataBase) );
+   fs.writeFileSync(process.cwd() + '/server/tttData.json', JSON.stringify(newDataBase) );
 
 }

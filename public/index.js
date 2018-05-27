@@ -331,110 +331,6 @@ function checkPotentialPath(token1,token2,index1,index2,index3) {
 }
 
 
-
-//[            ,            ]
-    // blocked,   fail
-    // fail,      fail
-    // potential, fial
-    // potential, fail
-
-/*Potential paths that Could have been, but didnt happeen.
-* * *
-- o o  horizotal o potential path. .....
-- - -
-checks to see if there were blank paths to be winnable still.
-goes thorugh all the verrtical, horizontal outcomes*/
-function checkForPossiblePaths(){
-  var potentialWins = [];
-  var winIter = 0;
-// check for a Horiztonal possibilities then
-//after 3 they theck for veritcal possibilities
-  for (winIter; winIter < 6; winIter ++){
-      // 1 == x , 0 == o, using the boolean so we can always determine the other letter
-      if(winIter<3){       // [         'x'                                 'o'                ]
-        potentialWins.push([ check_HorV_Path(winIter%3, 1 , 0), check_HorV_Path(winIter%3, 0 , 0) ] )
-      }                                   ///   check_HorV_Path(origin, x or o , horz or vert)
-      else{
-        potentialWins.push([ check_HorV_Path(winIter%3, 1 , 1), check_HorV_Path(winIter%3, 0 , 1)] )
-      }
-  }
-
-  // then i will ahve to diagnozals. not  ,, no i wont do thats
-  console.log('====\n\n Here arer the results of potentials!!!: \n');
-  console.log(potentialWins);
-
-  var blocked = checkString(potentialWins, "blocked");
-  console.log('blocked pagths: ', blocked);
-
-  var potential = checkString(potentialWins, "potential");
-  console.log("potential paths: ", potential)
-
-  return potentialWins;
-}
-
-function checkString( listPaths, query ){
-
-  var entries = [];
-    for (let curr=0; curr<listPaths.length;curr++){
-
-      // only one or the other can contain so its if, and else it
-      if(listPaths[curr][0].contains(query)){
-        switch(curr%3){
-          case
-        }
-        entries.push([curr,listPaths[curr][0]]);
-      }
-      else if(listPaths[curr][1].contains(query)){
-        entries.push([curr,listPaths[curr][1]]);
-      }
-
-    }
-    return entries;
-}
-
-/* chechhorz and checkvert
-*desc: literally only checks 1 row or colomn.
-*inputs:
-num: (int) the value of the index of the col or rows
-which: (boolean) the indicator of vertical or horizontal stride
-this determiens aruntime function that will calculate the index
-who: is it the x or the o?
-*/
-function check_HorV_Path(origin, who , which){
-  // init
-    var count = 0;
-    var letter = (who) ? 'x' : 'o'; // what letter are we looking for
-    var letter_ = (!who) ? 'x' : 'o';
-
-    var desc = which ? "vertical" : "horizontal";
-    var indexCalc = which ? function(step,origin){
-      return ( (3*step)  + origin  ); // how to stride vertically
-    } : function(step,origin){
-      return ( (3*origin)  + step ); // how to stride horizontally
-    };
-
-    var blocked_flag = false;
-   //=== checking horizontal or vertical possibilitses
-        for(let x = 0; x < 3; x++){
-          if(elements[  indexCalc(x,origin) ] == letter ) count +=  1; // increment
-          else if(elements[ indexCalc(x,origin) ] == letter_ )  blocked_flag = true; // Stop right there!
-        }
-        // now that we have counted, we need two
-        if(count === 2 && blocked_flag ){
-          return desc + " blocked ";
-        }
-        else if(count === 2){
-          // only triggered by 2, not one or 3
-          return desc + " potential ";
-        }
-        else{
-          return desc + " nothing ";
-        }
-}
-
-
-
-
 function evaluateWin() {
   // initliaze checking vars
   var broken = 0;
@@ -484,19 +380,24 @@ function evaluateWin() {
   }
   // one player has a winning combination
   else {
-    setWinner(winningTeam); // here we set the winning team!
-    setWinningCombination(pathDesc[winningPath]); ///// HERE WE SET THE TRUE WINNING PATH
-
     // now that we have evaulated the win, we can export this data to
     // be able to store it permanently.
+    outcomes = checkForPossiblePaths();
     let reportData = {
       winner: winningTeam,
       path: pathDesc[winningPath],
-      closeDescs: checkForPossiblePaths()
+      potential: checkString(outcomes, "potential"),
+      blocked: checkString(outcomes, "blocked")
     };
+
+    setList(reportData.potential , "#possiblePaths"); // set potential paths
+    setList(reportData.blocked, "#blockedPaths"); // set potential paths
+
+    setWinner(winningTeam); // here we set the winning team!
+    setWinningCombination(pathDesc[winningPath]); ///// HERE WE SET THE TRUE WINNING PATH
+
     var report = new tacReport(reportData);
-//     analTool.reportSend(report); // send the report to the server/
-   //outgoingReport(report);
+    outgoingReport(report);
   }
 }
 
@@ -547,7 +448,7 @@ function setWinnableByX(msg) {
 function setWinnableByO(msg) {
   document.getElementById("oWinnable").innerText = "winnable by o: ".concat(msg);
 }
-
+////////////////////////
 function setXPossibilities(msg) {
   document.getElementById("xPossibilities").innerText = "remaining x possible paths: ".concat(msg);
 }
@@ -555,7 +456,7 @@ function setXPossibilities(msg) {
 function setOPossibilities(msg) {
   document.getElementById("oPossibilities").innerText = "remaining o possible paths: ".concat(msg);
 }
-
+/////////////////////////////////
 function setUBPossibilities(msg) {
   document.getElementById("ubPossibilities").innerText = "remaining unbiased possible paths: ".concat(msg);
 }

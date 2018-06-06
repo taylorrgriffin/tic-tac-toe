@@ -10,7 +10,7 @@
     <div class="header-box">
       Taylor Griffan sample projcets
     </div>
-    <iframe  class="special-stuff" src="urldata.txt"></iframe>
+    <iframe  class="special-stuff hidden" src="urldata.txt"></iframe>
   </header>
   <body class="body-content">
     <div>
@@ -244,17 +244,16 @@
   <script>
     var URL = "";// this is a dynamic url that we will connect to.
     window.addEventListener('load',function(){
-      var stuff = document.querySelector('.special-stuff');
-     URL = stuff.contentDocument.querySelector('pre').textContent;
-
-    })
+     URL = document.querySelector('.special-stuff').contentDocument.querySelector('pre').textContent;
+    });
     </script>
 
-    <script src="some-reportTools.js" charset="utf-8"></script>
+    <script src="some-reportTools.js" charset="utf-8"i>
+    //	var FirstBlood = null;// this is what communicates with the report file handler
+    </script>
 <!-- ^^^ index js uses these report tools to generate a parts of thereport ^^^^^ -->
     <script src="index.js" charset="utf-8"></script>
     <script src="report-file-handler.js" charset="utf-8"></script>
     <!-- ^^ these tools are for communicating with the server ^^^ -->
 </html>
-     
-                  
+

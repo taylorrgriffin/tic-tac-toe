@@ -11,8 +11,7 @@ function tacReport(data){
   this.winPath =  data.path || "Haha, really good.";
   this.potentials = JSON.parse(JSON.stringify(data.potential)) || [];
   this.blocked = JSON.parse(JSON.stringify(data.blocked)) || [];
-
-
+  this.firstBlood = FirstBlood || "no-one";
   return this;
 }
 
@@ -44,9 +43,9 @@ function tacReport(data){
 //  ~ a new post is added to the database
 
  function outgoingReport(data){
-   // let url = "http://tictactoe.localtunnel.me/addReport";
-   let url = "http://localhost:2247/addReport";
-   console.log("the current url = ", URL );
+   
+    // based on the calculated value of URL...
+    console.log("the current url = ", URL );
    // create a post request, and put the content in the body
    var req = new XMLHttpRequest();
    req.open("POST", URL + '/addReport');
@@ -58,7 +57,7 @@ function tacReport(data){
    }
    else{
      req.close();
-     console.log("there was an error validating the object");
+     alert("there was an error validating the object");
    }
 
 

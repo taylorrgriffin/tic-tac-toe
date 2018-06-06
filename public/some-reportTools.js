@@ -45,7 +45,9 @@ function check_HorV_Path(origin, who , which){
     //initiazes CONSTANTS
     const letter = (who) ? 'x' : 'o'; // what letter are we looking for
     const letter_ = (!who) ? 'x' : 'o';
-
+    const desc = which ? "vertical" : "horizontal";
+    const indexCalc = which ? vertStride : horzStride;
+    
     switch( ('' + which + origin) ){
       case "10":  geo= "left "; break;
       case "11": geo= "middle "; break;
@@ -55,8 +57,6 @@ function check_HorV_Path(origin, who , which){
       case "02": geo= "bottom "; break;
       default: geo="diagonal"; break;
     }
-    const desc = which ? "vertical" : "horizontal";
-    const indexCalc = which ? vertStride : horzStride;
 
 
    //=== checking horizontal or vertical possibilitses
@@ -64,9 +64,11 @@ function check_HorV_Path(origin, who , which){
           if(elements[  indexCalc(x,origin) ] == letter ) count +=  1; // increment always if right.
           else if(elements[ indexCalc(x,origin) ] == letter_ )  blocked_flag = true; // Stop right there!
         }
-
+	if(count === 3){
+	   return geo + desc + "won by " + letter;
+	 }
         // now that we have counted, we need to form a conclusion
-        if(count === 2 && blocked_flag ){
+	else if(count === 2 && blocked_flag ){
           return geo + desc + " blocked by " + letter_;
         }
         else if(count === 2){
@@ -102,22 +104,22 @@ _________________
 checks to see if there were blank paths to be winnable still.
 goes thorugh all the verrtical, horizontal outcomes*/
 function checkForPossiblePaths(){
-  var potentialWins = [];
+  var pathDescs = [];
   var winIter = 0;
 // check for a Horiztonal possibilities then
 //after 3 they theck for veritcal possibilities
   for (winIter; winIter < 6; winIter ++){
       // 1 == x , 0 == o, using the boolean so we can always determine the other letter
       if(winIter<3){       // [         'x'                                 'o'                ]
-        potentialWins.push([ check_HorV_Path(winIter%3, 1 , 0), check_HorV_Path(winIter%3, 0 , 0) ] )
+        pathDescs.push([ check_HorV_Path(winIter%3, 1 , 0), check_HorV_Path(winIter%3, 0 , 0) ] )
       }                                   ///   check_HorV_Path(origin, x or o , horz or vert)
       else{
-        potentialWins.push([ check_HorV_Path(winIter%3, 1 , 1), check_HorV_Path(winIter%3, 0 , 1)] )
+        pathDescs.push([ check_HorV_Path(winIter%3, 1 , 1), check_HorV_Path(winIter%3, 0 , 1)] )
       }
   }
 
 
-  return potentialWins;
+  return pathDescs;
 }
 
 
@@ -131,7 +133,11 @@ function setList(queries, ID ){
   var list = document.body.querySelector(ID);
   var node, count = 0;
   //before setting it we remove it
+  let cleanup = list.querySelectorAll('li');
 
+  while ( cleanup.length ) {
+     cleanup[0].remove();
+  }
 
  do{
    node = document.createElement('li');

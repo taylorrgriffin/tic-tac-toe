@@ -116,7 +116,7 @@ server.post('/addReport', function(req,res,next){
    // here we check to see ifthe object is what we want it to be.
    if(data){
       gameData.push(data);
-      dataBackUp();
+      dataBackUp(); // back up the database after EVERy report
    }
 
    res.status(202).send();

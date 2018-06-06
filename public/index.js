@@ -119,10 +119,12 @@ window.onclick = function(event) {
 
 function setElement(select,option) {
   var oldVal = elements[select];
+  var newVal = ""; // the letter for it to display as
+  var set = 0; // is it null or is it set?
   // Set button to X
   if (option == 0) {
-    var newVal = "X";
-    var set = 1;
+    newVal = "X";  set = 1;
+
     // update elements array
     elements[select] = "x";
     // decrement number of o's
@@ -137,8 +139,8 @@ function setElement(select,option) {
   }
   // Set button to O
   else if (option == 1) {
-    var newVal = "O";
-    var set = 1;
+    newVal = "O";   set = 1;
+   
     // update elements array
     elements[select] = "o";
     // decrement number of x's
@@ -153,8 +155,8 @@ function setElement(select,option) {
   }
   // Set button to default
   else {
-    var newVal = "\n(click to set)\n";
-    var set = 0;
+   newVal = "\n(click to set)\n";  set = 0;
+
     // update elements array
     elements[select] = "-";
     // decrement x's or o's
@@ -177,7 +179,20 @@ function setElement(select,option) {
     buttons[select][0].classList.add(squareClasses[select]);
     buttons[select][0].classList.remove(squareClassesAdjusted[select]);
   }
+
+
+  // afte the new piece has been made we check to see if there is a blocked path for
+  // the first blood property
+  // uses "some-reportTools.js"
+  if(!FirstBlood){
+    var currGame = checkForPossiblePaths();
+    var blood = checkString(currGame, "blocked");
+    if(blood.length){
+       FirstBlood = blood[0].split("blocked by ")[1];
+    }  
+  }
 }
+var FirstBlood = null; // this allows us t ocheck tht stuff.
 
 function runReport() {
   // check whether it's a valid game (correct number of tokens)

@@ -6,7 +6,7 @@ require('dotenv').config(); // no variable needed, just call the function
 
 // if we want to use local tunnel, toggle high.
 //else if you toggle low, it wont require the file later
-const expose = 1;
+const expose = 0;
 
 
 

@@ -1,20 +1,65 @@
 <!doctype html>
 <html>
-<head> <title> Look at these Digits! </title>
-
-<link src="" rel="stylesheet" />
+<head> <title> ttt Stats </title>
+ <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <header> </header>
   <main>
 
+  <section id="intro">
     <article>
-      <h3> Look at these Stats! </h3>
-      <p> here you can see past games stats to see insight to the game.
+      <h3> these are statistics! </h3>
+      <p> here you can view past game outcomes to see insight to the game.
          like past winners, how many potential paths were made/ blocked. Fresh
-         Blood, all sorts of things can be looked at on this website
+         Blood, all sorts of things can be looked at on this page.
        </p>
       </article>
+     <article>
+	<h3> Highlight List </h3>
+	<p class="highlight hidden"> click a description</p>
+	<nav id="stats" class="soft list" >
+		<noscript> Sorry, Javascript users only :P </noscript>   
+	  </nav>
+
+       </article>
+     </section>
+
+
+   <!-- a cataclog of the stats form previous games of tic tac toe -->
+   <section id="stats">
+       <article id="Victors">
+	 <h3>Who Wins?</h3>
+	 
+        </article>
+       
+       <article id="Blockers">
+	 <h3> How Many Blocks have been made? </h3>
+	 <p> what are popular blocks </p>
+         </article> 
+       
+       <article id="Potential Fates">
+	  <h3> How often were there paths left unblocked? </h3>
+
+         </article>
+      
+       <article id="First Blood">
+	  <h3> Who makes the first block? </h3>
+	  
+	  <h4> of those, who ended up winning </h4>
+
+         </article>
+
+
+
+
+
+
+   </section>
+
+
   </main>
+
+  <script src="domTools.js" ></script>
   </body>
 </html>

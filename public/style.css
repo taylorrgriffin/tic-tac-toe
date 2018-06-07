@@ -1,4 +1,69 @@
 /*All HTML*/
+
+/* style sfor the stats.html page 
+ * we can seperate them later but for now
+ * these pages go here
+ *
+ * note there tha tthese use the flex box.
+ */
+section {
+   margin: 20px auto 20px auto;
+padding: 15px;}
+   
+
+nav.list{
+   display: flex;
+   flex-wrap: wrap;
+}
+
+nav.soft div {
+   border: 1px solid grey;
+   border-radius: 5px;
+   width: 100px;
+   height:35px;
+
+   margin: 8px;
+   padding: 5px;
+   background-color: grey;
+   box-shadow: 2px 2px 2px grey;
+}
+
+#stats {
+   width: 80%;
+   margin: auto;
+   border-radius: 5px;
+  background-color: rgb(222,222,222);
+}
+
+#stats article{
+ margin-left: auto;
+ margin-right:auto;
+ margin-bottom:18px;
+ padding:9px;
+
+ background-color: rgb(211,211,211);
+ border-radius:10px;
+ width: 80%;
+
+}
+
+
+
+
+/*======
+ *   end stats.html styles
+ *   =====*/
+
+
+
+
+
+
+
+
+
+
+
 .body-content {
   font-family: 'Libre Franklin', sans-serif;
 }

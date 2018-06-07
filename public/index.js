@@ -481,7 +481,11 @@ function testPrint() {
     console.log(elements[i]);
   }
 }
-
+function viewStats(){
+   console.log(window.location.href);
+// we are now transporting us to the next stuff.
+   window.location = window.location.href + "stats.html";
+}
 function resetBoard() {
   // Hide results section
   killResults();

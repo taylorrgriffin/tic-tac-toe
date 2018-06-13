@@ -109,8 +109,13 @@ function disableSelectEntry() {
   }
 }
 
-window.onclick = function(event) {
-  var check = event.srcElement;
+// this funciton works on mozilla as well as google chrome
+document.body.querySelector('.board-button-container').addEventListener('click',clickBox);
+
+
+function clickBox (event) {
+  var check = event.target;
+  console.log(event.target.id);
   // toggle off option-select menu if click occured outside of menu
   if (check.id != "tttElem") {
     disableSelectEntry();
@@ -191,6 +196,7 @@ function setElement(select,option) {
        FirstBlood = blood[0].split("blocked by ")[1];
     }  
   }
+  disableSelectEntry();
 }
 var FirstBlood = null; // this allows us t ocheck tht stuff.
 

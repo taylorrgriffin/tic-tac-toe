@@ -56,11 +56,8 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
   server.use(function(req,res,next){
     console.log('\n\n',"/////////////////////////");
-    console.log('=== Got request:// ===');
     console.log(' --URL:', req.url , '====');
     console.log(" --Method: ", req.method, '===');
-   console.log(" --body: ", req.body.winner );
-
     next();
 });
 
@@ -101,12 +98,14 @@ staticOpts = {
 
 
 
-server.use('/', express.static(process.cwd() + '/public', staticOpts) );
+server.use('/tg-tic-tac-toe', express.static(process.cwd() + '/public', staticOpts) );
 
-
+server.get("/tg-tic-tac-toe/getDB",(req,res,next)=>{
+  res.status(200).send(JSON.stringify(gameData));
+})
 //this funcction gets a store , a gameplay instance,
 //and records it to the database
-server.post('/addReport', function(req,res,next){
+server.post('/tg-tic-tac-toe/addReport', function(req,res,next){
 
 
    console.log("====\n\n adding a report now!" +
@@ -136,12 +135,6 @@ server.listen(port, function(error) {
 
 });
 
-// now that we are up and running, invoke the TUNNEL
-// this connects it to
-// http://tictactoe.localtunnel.me/
-if(expose){
-  require(process.cwd()  + '/server/expose.js');
-}
 
 
 //========================================
@@ -151,11 +144,13 @@ if(expose){
 
 //using writefile sync we can back up the data
 function dataBackUp(){
+  // data: gameData
 
-   var newDataBase = {
-      data: gameData
-   }
+   var newDataBase = [];
+   gameData.forEach(function(val,index){
+     newDataBase.push(JSON.stringify(val));
+   });
+   const EXPORT_STRING = `{ "data": [${newDataBase.join(",\n\n")} \n]}`;
 
-   fs.writeFileSync(process.cwd() + '/server/tttData.json', JSON.stringify(newDataBase) );
-
+   fs.writeFileSync(process.cwd() + '/server/tttData.json', EXPORT_STRING);
 }

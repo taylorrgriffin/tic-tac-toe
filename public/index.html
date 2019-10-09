@@ -8,7 +8,7 @@
   </head>
   <header>
     <div class="header-box">
-    is that T i c t A c t oE? 
+    is that T i c t A c t oE?
     </div>
     <iframe  class="special-stuff hidden" src="urldata.txt"></iframe>
   </header>
@@ -20,9 +20,19 @@
       Tic-Tac-Toe Analysis Tool
     </div>
     <div class="project-desc">
-      <p> This interactive module will analyze an in-progess game of tic-tac-toe. </p>
-      <p> The report will indicate whether the game has been won, whether it's winnable (by either player), as well as some other information.</p>
-      <p> To begin, click the squares you wish to enter X's or O's in, then click "Run Report." Additionally, you can click "Reset" to clear all squares back to their default values.</p>
+      <section>
+        <article class="header-p">
+        <p class="author"> started and developed by <a target="_blank"  href="https://github.com/taylorrgriffin">Taylor</a></p>
+         <p class="author"> Also developed by  <a target="_blank" href="https://github.com/quasibit-wrangler">Conner</a></p>
+        </article>
+        <article class="header-p">
+          <p> This interactive module will analyze an in-progess game of tic-tac-toe. </p>
+          <p> The report will indicate whether the game has been won, as well as some other information.</p>
+        </article>
+        <article class="header-p">
+          <p> To begin, click the squares you wish to enter X's or O's in, then click "Run Report."
+            Additionally, you can click "Reset" to clear all squares back to their default values.</p>
+        </article>
     </div>
     <hr>
     <div class="tic-tac-toe-container">
@@ -219,37 +229,25 @@
       <div id="winner">
         Winning combination: N/A
       </div>
+      <div id="first-blood-result">
+      </div>
+
       <ul id="possiblePaths">
         <h5> Possible Paths: </h5>
         </ul>
       <ul id="blockedPaths">
         <h5> Blocked Paths: </h5>
         </ul>
-      <div id="xWinnable">
-        winnable by x:
-      </div>
-      <div id="xPossibilities">
-        remaining x possible combinations:
-      </div>
-      <div id="oWinnable">
-        winnable by o:
-      </div>
-      <div id="oPossibilities">
-        remaining o possible combinations:
-      </div>
-      <div id="ubPossibilities">
-        remaining unbiased possible combinations:
-      </div>
     </div>
   </body>
 
   <!-- all the necessary game scripts -->
-  <script>
+  <!-- <script>
     var URL = "";// this is a dynamic url that we will connect to.
     window.addEventListener('load',function(){
      URL = document.querySelector('.special-stuff').contentDocument.querySelector('pre').textContent;
     });
-    </script>
+    </script> -->
 
     <script src="some-reportTools.js" charset="utf-8"i>
     //	var FirstBlood = null;// this is what communicates with the report file handler
@@ -259,4 +257,3 @@
     <script src="report-file-handler.js" charset="utf-8"></script>
     <!-- ^^ these tools are for communicating with the server ^^^ -->
 </html>
-

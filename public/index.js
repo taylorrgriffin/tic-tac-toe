@@ -145,7 +145,7 @@ function setElement(select,option) {
   // Set button to O
   else if (option == 1) {
     newVal = "O";   set = 1;
-   
+
     // update elements array
     elements[select] = "o";
     // decrement number of x's
@@ -194,7 +194,7 @@ function setElement(select,option) {
     var blood = checkString(currGame, "blocked");
     if(blood.length){
        FirstBlood = blood[0].split("blocked by ")[1];
-    }  
+    }
   }
   disableSelectEntry();
 }
@@ -218,13 +218,13 @@ function runReport() {
 ///////////////////////////////////////////////
     // if a player won, don't finish rest of report
 
-    else {
-      setWinnableByX("n/a");
-      setWinnableByO("n/a");
-      setXPossibilities("n/a");
-      setOPossibilities("n/a");
-      setUBPossibilities("n/a");
-    }
+    // else {
+    //   setWinnableByX("n/a");
+    //   setWinnableByO("n/a");
+    //   setXPossibilities("n/a");
+    //   setOPossibilities("n/a");
+    //   setUBPossibilities("n/a");
+    // }
   }
   // if invalid, don't finish rest of report
   else {
@@ -410,14 +410,15 @@ function evaluateWin() {
       potential: checkString(outcomes, "potential"),
       blocked: checkString(outcomes, "blocked")
     };
+    var report = new tacReport(reportData);
 
     setList(reportData.potential , "#possiblePaths"); // set potential paths
     setList(reportData.blocked, "#blockedPaths"); // set potential paths
-
     setWinner(winningTeam); // here we set the winning team!
     setWinningCombination(pathDesc[winningPath]); ///// HERE WE SET THE TRUE WINNING PATH
+    setFirstBlood(report.firstBlood);
 
-    var report = new tacReport(reportData);
+
     outgoingReport(report);
   }
 }
@@ -462,25 +463,29 @@ function setWinningCombination(msg) {
   document.getElementById("winner").innerText = "winning path: ".concat(msg);
 }
 
-function setWinnableByX(msg) {
-  document.getElementById("xWinnable").innerText = "winnable by x: ".concat(msg);
+function setFirstBlood(msg){
+  document.getElementById("first-blood-result").textContent = "First Blod: ".concat(msg);
 }
-
-function setWinnableByO(msg) {
-  document.getElementById("oWinnable").innerText = "winnable by o: ".concat(msg);
-}
-////////////////////////
-function setXPossibilities(msg) {
-  document.getElementById("xPossibilities").innerText = "remaining x possible paths: ".concat(msg);
-}
-
-function setOPossibilities(msg) {
-  document.getElementById("oPossibilities").innerText = "remaining o possible paths: ".concat(msg);
-}
-/////////////////////////////////
-function setUBPossibilities(msg) {
-  document.getElementById("ubPossibilities").innerText = "remaining unbiased possible paths: ".concat(msg);
-}
+//
+// function setWinnableByX(msg) {
+//   document.getElementById("xWinnable").innerText = "winnable by x: ".concat(msg);
+// }
+//
+// function setWinnableByO(msg) {
+//   document.getElementById("oWinnable").innerText = "winnable by o: ".concat(msg);
+// }
+// ////////////////////////
+// function setXPossibilities(msg) {
+//   document.getElementById("xPossibilities").innerText = "remaining x possible paths: ".concat(msg);
+// }
+//
+// function setOPossibilities(msg) {
+//   document.getElementById("oPossibilities").innerText = "remaining o possible paths: ".concat(msg);
+// }
+// /////////////////////////////////
+// function setUBPossibilities(msg) {
+//   document.getElementById("ubPossibilities").innerText = "remaining unbiased possible paths: ".concat(msg);
+// }
 
 function testPrint() {
   for (i = 0; i < 9; i++) {

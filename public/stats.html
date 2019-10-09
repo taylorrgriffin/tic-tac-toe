@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
 <head> <title> ttt Stats </title>
- <link rel="stylesheet" type="text/css" href="style.css">
+ <link rel="stylesheet" type="text/css" href="style.css" />
+ <link rel="stylesheet" type="text/css" href="stats.css" />
+ <script type="text/javascript" src="stats.js"></script>
 </head>
 <body>
   <header> </header>
@@ -19,7 +21,7 @@
 	<h3> Highlight List </h3>
 	<p class="highlight hidden"> click a description</p>
 	<nav id="stats" class="soft list" >
-		<noscript> Sorry, Javascript users only :P </noscript>   
+		<noscript> Sorry, Javascript users only :P </noscript>
 	  </nav>
 
        </article>
@@ -28,27 +30,58 @@
 
    <!-- a cataclog of the stats form previous games of tic tac toe -->
    <section id="stats">
+
+     <article id="First Blood">
+  <h3> Who makes the first block? </h3>
+  <table>
+    <tbody id="first-blood-stats-a">
+      <tr><th>| O | Num First Bloods</th><th>| x | Num First Bloods</th></tr>
+    </tbody>
+  </table>
+  <h4> of those, who ended up winning </h4>
+  <table>
+    <tbody id="first-blood-stats-b">
+      <tr><th>| O | firstblood/loss ratio</th><th>| X | firstblood/loss ratio</th></tr>
+    </tbody>
+  </table>
+       </article>
+<!-- "first-blood-stats-a"
+"first-blood-stats-b"
+"number-wins-stats"
+"total-blocks-stats" -->
        <article id="Victors">
 	 <h3>Who Wins?</h3>
-	 
+   <table>
+     <tbody id="number-wins-stats">
+       <tr><th>| O | Number Wins</th><th>| X | Number Wins</th></tr>
+     </tbody>
+   </table>
         </article>
-       
+
        <article id="Blockers">
 	 <h3> How Many Blocks have been made? </h3>
+   <table>
+     <tbody id="total-blocks-stats">
+       <tr><th>| O | Total Blocks </th><th>| x | Total Blocks</th></tr>
+     </tbody>
+   </table>
 	 <p> what are popular blocks </p>
-         </article> 
-       
+   <table>
+     <tbody id="dictionary-blocks-stats">
+       <tr><th>Name of Block</th><th>Number times Executed</th></tr>
+     </tbody>
+   </table>
+         </article>
+
        <article id="Potential Fates">
 	  <h3> How often were there paths left unblocked? </h3>
-
+    <table>
+      <tbody id="potential-fates-stats">
+        <tr><th>Name of Block</th><th>Number times Executed</th></tr>
+      </tbody>
+    </table>
          </article>
-      
-       <article id="First Blood">
-	  <h3> Who makes the first block? </h3>
-	  
-	  <h4> of those, who ended up winning </h4>
 
-         </article>
 
 
 
@@ -60,6 +93,6 @@
 
   </main>
 
-  <script src="domTools.js" ></script>
+  <script src="/stats.js" ></script>
   </body>
 </html>

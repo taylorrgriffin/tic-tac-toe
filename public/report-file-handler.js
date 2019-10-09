@@ -43,16 +43,18 @@ function tacReport(data){
 //  ~ a new post is added to the database
 
  function outgoingReport(data){
-   
+
     // based on the calculated value of URL...
     console.log("the current url = ", URL );
    // create a post request, and put the content in the body
    var req = new XMLHttpRequest();
-   req.open("POST", URL + '/addReport');
+
+   req.open("POST",`http://${window.location.host}/tg-tic-tac-toe/addReport`);
 //validate
    if(data instanceof tacReport){
      let text = JSON.stringify(data);
      req.setRequestHeader("Content-Type","application/json");
+     console.log(text);
      req.send(text);
    }
    else{
